@@ -5,9 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Victory.unity
+    guid: 40400f6e289520743ba70f75f9b5b917
+  - enabled: 1
+    path: Assets/gameplay.unity
+    guid: 48dce6b7609ee4c4ba1fddc2245fe218
+  - enabled: 1
+    path: Assets/Defeat.unity
+    guid: 8844b3630150c6b44bdeb95cbaa51277
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

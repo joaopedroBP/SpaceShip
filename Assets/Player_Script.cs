@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player_Script : MonoBehaviour
 {
-
+    [Header("Teclas de Comando")]
     public KeyCode moveLeft = KeyCode.A;
     public KeyCode moveRight = KeyCode.D;
     public KeyCode moveUp = KeyCode.W;
@@ -11,7 +11,13 @@ public class Player_Script : MonoBehaviour
 
     private Rigidbody2D rb2d; 
 
-    public float speed = 8.0f;
+    public float shootCooldown = 0.5f;
+    private float nextShootTime = 0f;
+
+    public GameObject bolt_prefab;
+
+    [Header("Configurações")]
+    public float speed = 5.0f; 
 
     void Start()
     {
@@ -20,26 +26,31 @@ public class Player_Script : MonoBehaviour
 
     void Update()
     {
-        var vel = rb2d.linearVelocity;
+        Vector2 inputDirecao = Vector2.zero;
 
-        if(Input.GetKey(moveLeft)){
-            vel.x = -speed;
-        }
-        else if(Input.GetKey(moveRight)){
-            vel.x = speed;
-        }
-        else if(Input.GetKey(moveUp)){
-            vel.y = speed;
-        }
-        else if(Input.GetKey(moveDown)){
-            vel.y = -speed;
-        }else{
-            vel.x = 0;
-            vel.y = 0;
+        if (Input.GetKey(moveLeft))  inputDirecao.x -= 1;
+        if (Input.GetKey(moveRight)) inputDirecao.x += 1;
+        if (Input.GetKey(moveUp))    inputDirecao.y += 1;
+        if (Input.GetKey(moveDown))  inputDirecao.y -= 1;
+
+        if (inputDirecao.magnitude > 1)
+        {
+            inputDirecao.Normalize();
         }
 
+        // Aplica o movimento
+        rb2d.linearVelocity = inputDirecao * speed;
 
-        rb2d.linearVelocity = vel;
+        shoot();
+    }
 
+    void shoot(){
+        if(Input.GetKey(shootBolt) && Time.time >= nextShootTime){
+
+            Vector2 boltPosition = new Vector2(transform.position.x + 0.5f , transform.position.y);
+            Instantiate(bolt_prefab, boltPosition, Quaternion.identity);
+
+            nextShootTime = Time.time + shootCooldown;
+        }
     }
 }
